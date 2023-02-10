@@ -24,7 +24,11 @@ const Home: NextPage = () => {
       nonce,
     });
 
-    console.log({ message: message.prepareMessage() });
+    const signature = await signMessageAsync({
+      message: message.prepareMessage(),
+    });
+    console.log({ signature });
+
   }
 
   return (
