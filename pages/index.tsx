@@ -1,13 +1,37 @@
 import type { NextPage } from 'next';
 import type { FC } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { SiweMessage } from 'siwe';
+import { useAccount, useNetwork, useSignMessage } from 'wagmi';
 
 const Home: NextPage = () => {
+
+  const { address } = useAccount();
+  const { chain } = useNetwork();
+  const { signMessageAsync } = useSignMessage();
+
+
+  const signIn = async () => {
+    const chainId = chain?.id;
+    const nonceRes = await fetch('/api/nonce');
+    const nonce = await nonceRes.text();
+    const message = new SiweMessage({
+      domain: window.location.hostname,
+      address,
+      statement: 'Sign In with Ethereum',
+      version: '1.0',
+      chainId,
+      nonce,
+    });
+
+    console.log({ message: message.prepareMessage() });
+  }
+
   return (
     <div className='py-6 justify-center text-center'>
       <div className='flex justify-center'>
         <ConnectButton />
-        <button className='rounded bg-slate-200 p-1 ml-2'>
+        <button onClick={signIn} className='rounded bg-slate-200 p-1 ml-2'>
           Sign in with Ethereum
         </button>
       </div>
