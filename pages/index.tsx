@@ -7,6 +7,9 @@ const Home: NextPage = () => {
     <div className='py-6 justify-center text-center'>
       <div className='flex justify-center'>
         <ConnectButton />
+        <button className='rounded bg-slate-200 p-1 ml-2'>
+          Sign in with Ethereum
+        </button>
       </div>
 
       <h1 className='text-4xl font-bold mt-6'>🚀 create-web3-frontend</h1>
